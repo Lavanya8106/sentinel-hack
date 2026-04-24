@@ -114,7 +114,7 @@ st.title(" Smart Tracker Dashboard")
 df = load_data()
 
 # ---------- Sidebar ----------
-st.sidebar.header("➕ Add Task")
+st.sidebar.header(" Add Task")
 
 task = st.sidebar.text_input("Task name")
 
@@ -134,7 +134,7 @@ if add:
         st.sidebar.warning("Enter a task")
 
 # ---------- Update section ----------
-st.subheader("✏️ Update Tasks")
+st.subheader(" Update Tasks")
 
 if len(df) > 0:
     col1, col2 = st.columns(2)
