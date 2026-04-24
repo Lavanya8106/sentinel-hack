@@ -89,17 +89,7 @@ if st.button("Set Reminder"):
         st.write(reminder_agent(student_name, task, study_time))
     else:
         st.warning("Please enter your name and task.")
-st.markdown(
-    """
-    <style>
-    .stApp {
-        background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20231110/pngtree-abstract-light-colored-paint-texture-background-wallpaper-image_13802780.pngs");
-        background-size: cover;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime
@@ -199,3 +189,14 @@ st.subheader(" Progress Overview")
 
 if len(df) > 0:
     st.bar_chart(df["Status"].value_counts())
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://static.vecteezy.com/system/resources/thumbnails/053/657/623/small/pearlescent-gradient-background-with-a-soft-abstract-backdrop-colorful-wallpaper-vibrant-fluid-gradients-and-a-smooth-gradation-texture-vector.jpg");
+        background-size: cover;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
