@@ -68,3 +68,24 @@ if st.button("Explain Topic"):
     explanation = tutor_agent(topic)
     st.markdown(explanation)
     st.success("Explanation generated!")
+import streamlit as st
+
+st.set_page_config(page_title="Reminder Agent", layout="centered")
+
+st.title(" Reminder Agent")
+st.subheader("Student Study Reminder System")
+
+student_name = st.text_input("Enter your name")
+task = st.text_input("Enter your study task")
+study_time = st.time_input("Select study time")
+
+def reminder_agent(name, task, time):
+    return f"Hello {name} \n\n Reminder: Don't forget to complete '{task}' at {time}."
+
+if st.button("Set Reminder"):
+    if student_name and task:
+        st.success("Reminder Created Successfully!")
+        st.subheader("Your Reminder")
+        st.write(reminder_agent(student_name, task, study_time))
+    else:
+        st.warning("Please enter your name and task.")
