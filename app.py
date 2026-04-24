@@ -24,8 +24,8 @@ if st.button("Generate Study Plan"):
     st.success("Plan generated successfully!")
 if "math" in subjects.lower():
     st.info(" Tip: Spend extra time on Math if it's a weak subject")
-    # 📘 Tutor Agent UI
-st.header("📘 Tutor Agent")
+    # Tutor Agent UI
+st.header(" Tutor Agent")
 
 topic = st.text_input("Enter topic to learn")
 
