@@ -89,3 +89,113 @@ if st.button("Set Reminder"):
         st.write(reminder_agent(student_name, task, study_time))
     else:
         st.warning("Please enter your name and task.")
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20231110/pngtree-abstract-light-colored-paint-texture-background-wallpaper-image_13802780.pngs");
+        background-size: cover;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+import streamlit as st
+import pandas as pd
+from datetime import datetime
+import os
+
+file = "data.csv"
+
+# ---------- Load / Save ----------
+def load_data():
+    if os.path.exists(file):
+        return pd.read_csv(file)
+    return pd.DataFrame(columns=["Task", "Status", "Time"])
+
+def save_data(df):
+    df.to_csv(file, index=False)
+
+# ---------- Page Setup ----------
+st.set_page_config(page_title="Tracker Dashboard", layout="wide")
+
+st.title(" Smart Tracker Dashboard")
+
+df = load_data()
+
+# ---------- Sidebar ----------
+st.sidebar.header("➕ Add Task")
+
+task = st.sidebar.text_input("Task name")
+
+add = st.sidebar.button("Add Task")
+
+if add:
+    if task.strip():
+        new = {
+            "Task": task,
+            "Status": "Pending",
+            "Time": datetime.now().strftime("%Y-%m-%d %H:%M")
+        }
+        df = pd.concat([df, pd.DataFrame([new])], ignore_index=True)
+        save_data(df)
+        st.sidebar.success("Task added!")
+    else:
+        st.sidebar.warning("Enter a task")
+
+# ---------- Update section ----------
+st.subheader("✏️ Update Tasks")
+
+if len(df) > 0:
+    col1, col2 = st.columns(2)
+
+    with col1:
+        selected = st.selectbox("Select Task", df["Task"].tolist())
+
+    with col2:
+        status = st.selectbox("Update Status", ["Pending", "In Progress", "Done"])
+
+    if st.button("Update Task"):
+        df.loc[df["Task"] == selected, "Status"] = status
+        df.loc[df["Task"] == selected, "Time"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+        save_data(df)
+        st.success("Updated successfully!")
+
+# ---------- Dashboard view ----------
+st.subheader("Task Dashboard")
+
+if len(df) > 0:
+    for i, row in df.iterrows():
+
+        status = row["Status"]
+
+        # color tags
+        if status == "Done":
+            color = "green"
+        elif status == "In Progress":
+            color = "orange"
+        else:
+            color = "red"
+
+        st.markdown(f"""
+        <div style="
+            padding:10px;
+            margin:5px;
+            border-radius:10px;
+            background-color:#f5f5f5;
+            border-left:6px solid {color};
+        ">
+            <b>{row['Task']}</b><br>
+            Status: <b>{status}</b><br>
+            Updated: {row['Time']}
+        </div>
+        """, unsafe_allow_html=True)
+
+else:
+    st.info("No tasks yet. Add some from sidebar.")
+
+# ---------- Progress ----------
+st.subheader(" Progress Overview")
+
+if len(df) > 0:
+    st.bar_chart(df["Status"].value_counts())
