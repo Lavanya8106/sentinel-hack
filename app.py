@@ -64,7 +64,6 @@ It is important for engineering, science, and daily life."""
 This is an important concept.
 Try learning its basics, examples, and applications step by step."""
 
-# ▶️ Button
 if st.button("Explain Topic"):
     explanation = tutor_agent(topic)
     st.markdown(explanation)
